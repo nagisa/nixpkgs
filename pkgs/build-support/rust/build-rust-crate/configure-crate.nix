@@ -140,11 +140,8 @@ in ''
 
      set -e
      if [[ -n "$(ls target/build/${crateName}.out)" ]]; then
-
         if [[ -e "${libPath}" ]]; then
            cp -r target/build/${crateName}.out/* $(dirname ${libPath}) #*/
-        else
-           cp -r target/build/${crateName}.out/* src #*/
         fi
      fi
   fi
