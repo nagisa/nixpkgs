@@ -104,6 +104,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = with xorg; [
+    pkgconfig
     expat llvmPackages.llvm libglvnd xorgproto
     libX11 libXext libxcb libXt libXfixes libxshmfence libXrandr
     libffi libvdpau libelf libXvMC
@@ -112,10 +113,18 @@ stdenv.mkDerivation {
     ++ lib.optionals stdenv.isLinux [ libomxil-bellagio libva-minimal ]
     ++ lib.optional withValgrind valgrind-light;
 
+  depsBuildBuild = [ pkgconfig ];
+
+  postUnpack = ''
+    env
+    exit 1
+  '';
+
   nativeBuildInputs = [
     pkgconfig meson ninja
     intltool bison flex file
     python3Packages.python python3Packages.Mako
+    wayland
   ];
 
   propagatedBuildInputs = with xorg; [

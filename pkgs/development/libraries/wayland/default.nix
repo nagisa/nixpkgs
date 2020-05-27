@@ -33,9 +33,14 @@ in stdenv.mkDerivation rec {
       "find_program('${stdenv.cc.targetPrefix}nm').path()"
   '';
 
+  depsBuildBuild = [ pkgconfig ];
+
   nativeBuildInputs = [
     meson pkgconfig ninja
   ] ++ lib.optionals isCross [
+    libffi
+    expat
+    libxml2
     wayland # For wayland-scanner during the build
   ] ++ lib.optionals withDocumentation [
     (graphviz-nox.override { pango = null; }) # To avoid an infinite recursion
